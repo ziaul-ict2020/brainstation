@@ -35,6 +35,8 @@ services:
       - ./build/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
       - ./build/php/php.ini:/usr/local/etc/php/php.ini:rw
       - ./build/php/openssl.cnf:/etc/ssl/openssl.cnf:rw
+    depends_on:
+      - db
     networks:
       - web
   db:
