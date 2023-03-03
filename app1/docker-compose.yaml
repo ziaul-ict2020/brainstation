@@ -16,13 +16,13 @@ services:
     networks:
       - web
   app1:
-    image: multistage:v1
+    build: 
+      context: ./build
     container_name: app1
     hostname: app1
     restart: always
     tty: true
-    #working_dir: /app
-    #user: "1000:0"
+    working_dir: /app
     logging:
       driver: "json-file"
       options:
