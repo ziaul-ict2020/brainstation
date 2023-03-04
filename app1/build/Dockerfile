@@ -3,7 +3,7 @@ FROM php:8.2.3-fpm AS builder
 
 # Set the working directory to /app
 WORKDIR /app
-
+COPY ../src .
 # Install any necessary packages
 
 RUN apt-get update \
@@ -14,12 +14,6 @@ RUN apt-get update \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install Laravel
-RUN composer create-project --prefer-dist laravel/laravel .
-
-# Copy From Builder
-
-FROM php:8.2.3-fpm-alpine
-RUN apk --no-cache add ca-certificates
-WORKDIR /app
-COPY --from=builder /app /app
+# Install Dependency if any need
+#RUN composer install -d ./app
+RUN composer install --no-interaction --optimize-autoloader --no-dev

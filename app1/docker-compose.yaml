@@ -10,31 +10,29 @@ services:
       - "8081:80"
     volumes:
       - ./src:/app
-      - ./build/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
     links:
       - app1
     networks:
       - web
   app1:
-    build: 
-      context: ./build
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile
     container_name: app1
     hostname: app1
     restart: always
     tty: true
-    working_dir: /app
     logging:
       driver: "json-file"
       options:
         max-size: "200k"
         max-file: "3"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
       - ./src:/app
-      - ./build/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ./build/php/php.ini:/usr/local/etc/php/php.ini:rw
-      - ./build/php/openssl.cnf:/etc/ssl/openssl.cnf:rw
+      - ./config/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./config/php/php.ini:/usr/local/etc/php/php.ini:rw
+      - ./config/php/openssl.cnf:/etc/ssl/openssl.cnf:rw
     depends_on:
       - db
     networks:
