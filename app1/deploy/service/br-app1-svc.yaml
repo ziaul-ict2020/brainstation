@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: br-app1-svc
+  namespace: br-app1
+  labels:
+    app: br-app1
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: br-app1

@@ -1,0 +1,58 @@
+pipeline {
+    agent any 
+    environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    BUILDVERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
+    ALPHA = sh(script: "echo `openssl rand -hex 4`", returnStdout: true).trim()
+    }
+
+    stages {
+        stage('Git Clone') {
+            steps {
+            git branch: 'main',
+                credentialsId: 'github_credential',
+                url: 'https://github.com/ziaul-ict2020/brainstation.git'
+            sh "pwd && ls -lrth"
+            sh "cd app1 && mv build/Dockerfile ."
+            }
+        }
+
+        stage ('Sonar Scan') {
+            steps {
+                script {
+                    def scannerHome = tool 'sonarqube-scanner-4.7.0'   
+                    withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
+                        sh "${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=firstproject \
+                        -Dsonar.projectName=first-project \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sourceEncoding=UTF-8 \
+                        -Dsonar.host.url=http://20.28.185.15:9000/"
+                        }
+                }
+            }
+        }
+
+        stage ('Image Build') {
+            steps {  
+                sh 'docker build -t ziaulhaque/br-app1:$ALPHA-$BUILDVERSION .'
+            }
+        }
+        stage('login to dockerhub') {
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('push image') {
+            steps{
+                sh 'docker push ziaulhaque/br-app1:$ALPHA-$BUILDVERSION'
+            }
+        }
+
+    }
+    post {
+        always {
+            sh 'docker logout'
+        }
+    }
+}
