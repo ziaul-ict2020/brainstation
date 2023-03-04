@@ -7,7 +7,7 @@ COPY src/ .
 # Install any necessary packages
 
 RUN apt-get update \
-    && apt-get -y install --no-install-recommends locales git unzip curl libzip-dev libicu-dev libonig-dev vim libpq-dev libpng-dev \
+    && apt-get -y install --no-install-recommends apt-utils locales git unzip curl libzip-dev libicu-dev libonig-dev vim libpq-dev libpng-dev \
     && apt-get clean \
     && docker-php-ext-install intl bcmath pdo pdo_mysql pdo_pgsql mbstring zip exif pcntl opcache gd
 
