@@ -3,7 +3,7 @@ FROM php:8.2.3-fpm AS builder
 
 # Set the working directory to /app
 WORKDIR /app
-COPY src/ .
+COPY ../src .
 # Install any necessary packages
 
 RUN apt-get update \
