@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: web-br-app1-ingress
+  namespace: br-app1
+spec:
+  gateways:
+  - gateway-br-app1
+  hosts:
+  - web.br-app1.com
+  http:
+  - route:
+    - destination:
+        host: br-app1-svc
+        port:
+          number: 80

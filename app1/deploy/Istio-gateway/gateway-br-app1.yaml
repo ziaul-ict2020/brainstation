@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: gateway-br-app1
+  namespace: br-app1
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - web.br-app1.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
