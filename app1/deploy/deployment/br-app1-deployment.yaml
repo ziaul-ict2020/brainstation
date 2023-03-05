@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: br-app1-php
-          image: ziaulhaque/br-app1:eae5ce56-1677962228 # {"$imagepolicy": "flux-system:dtacapp-dev-sms-otp-image-policy"}
+          image: ziaulhaque/br-app1:eae5ce56-1677962228 # {"$imagepolicy": "flux-system:br-app1-repository-policy"}
           imagePullPolicy: Always
           ports:
             - containerPort: 9000
