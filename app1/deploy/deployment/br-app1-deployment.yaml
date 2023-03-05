@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: br-app1-php
-          image: ziaulhaque/br-app1:2ebd66c0-1678010468 # {"$imagepolicy": "flux-system:br-app1-repository-policy"}
+          image: ziaulhaque/br-app1:a1c83c24-1678012089 # {"$imagepolicy": "flux-system:br-app1-repository-policy"}
           imagePullPolicy: Always
           ports:
             - containerPort: 9000
