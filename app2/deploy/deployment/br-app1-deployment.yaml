@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: br-app1-deployment
-  namespace: br-app1
+  name: br-app2-deployment
+  namespace: br-app2
 spec:
   selector:
     matchLabels:
-      app: br-app1
+      app: br-app2
   template:
     metadata:
       labels:
-        app: br-app1
+        app: br-app2
     spec:
       containers:
-        - name: br-app1-php
-          image: ziaulhaque/br-app1:a1c83c24-1678012089 # {"$imagepolicy": "flux-system:br-app1-repository-policy"}
+        - name: br-app2-php
+          image: ziaulhaque/br-app2:a1c83c24-1678012089 # {"$imagepolicy": "flux-system:br-app2-repository-policy"}
           imagePullPolicy: Always
           ports:
             - containerPort: 9000
@@ -29,7 +29,7 @@ spec:
               memory: "1024Mi"
               cpu: "512m"
           volumeMounts:
-            - name: br-app1
+            - name: br-app2
               mountPath: /app
           lifecycle:
             postStart:
@@ -46,7 +46,7 @@ spec:
                   - /bin/sh
                   - -c
                   - "sleep 30"
-        - name: br-app1-nginx
+        - name: br-app2-nginx
           image: nginx:1.22
           ports:
             - containerPort: 80
@@ -58,9 +58,9 @@ spec:
               memory: "1024Mi"
               cpu: "512m"
           volumeMounts:
-            - name: br-app1
+            - name: br-app2
               mountPath: /app
-            - name: br-app1-nginx-default-conf
+            - name: br-app2-nginx-default-conf
               mountPath: /etc/nginx/conf.d/default.conf
               subPath: default.conf
           lifecycle:
@@ -71,8 +71,8 @@ spec:
                   - -c
                   - "sleep 30"
       volumes:
-        - name: br-app1
+        - name: br-app2
           emptyDir: {}
-        - name: br-app1-nginx-default-conf
+        - name: br-app2-nginx-default-conf
           configMap:
-            name: br-app1-nginx-default-conf
+            name: br-app2-nginx-default-conf

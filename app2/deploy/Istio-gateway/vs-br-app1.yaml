@@ -1,16 +1,16 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: web-br-app1-ingress
-  namespace: br-app1
+  name: web-br-app2-ingress
+  namespace: br-app2
 spec:
   gateways:
-  - gateway-br-app1
+  - gateway-br-app2
   hosts:
-  - web.br-app1.com
+  - web.br-app2.com
   http:
   - route:
     - destination:
-        host: br-app1-svc
+        host: br-app2-svc
         port:
           number: 80
