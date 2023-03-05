@@ -6,5 +6,6 @@ docker version
 
 # Laravel project
 composer create-project laravel/laravel app1
+
 composer create-project laravel/laravel app2
 
